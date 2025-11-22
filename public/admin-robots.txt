@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Bloquear todos los crawlers en el panel de administración
+# Este archivo debe configurarse en CloudPanel para admin.cateringsupermax.cloud

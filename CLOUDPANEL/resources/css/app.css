@@ -1,0 +1,43 @@
+@view-transition{
+    navigation: auto;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+    .animate-spin {
+        animation: spin 1s linear infinite;
+    }
+}
+
+@font-face {
+  font-family: 'Swiss 721 Black Rounded Regular';
+  src: url('../fonts/Swiss-721-Black-Rounded-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Swiss 721 Rounded Bold';
+  src: url('../fonts/Swiss-721-Rounded-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+.swissbold {
+  font-family: 'Swiss 721 Black Rounded Regular', 'Segoe UI', system-ui, sans-serif;
+}
+
+.swissregular{
+    font-family: 'Swiss 721 Rounded Bold', 'Segoe UI', system-ui, sans-serif;
+}

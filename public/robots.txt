@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /portal-root-2n98jd/
+Disallow: /access-gate-7k4m
+
+# Bloquear subdominios de administración
+User-agent: *
+Host: cateringsupermax.cloud

@@ -1,0 +1,55 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+    
+    # Ocultar versión de Apache/PHP
+    ServerSignature Off
+
+    # Forzar HTTPS en producción
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Handle X-XSRF-Token Header
+    RewriteCond %{HTTP:x-xsrf-token} .
+    RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# CORS Headers para assets compilados
+<IfModule mod_headers.c>
+    # Ocultar información del servidor
+    Header unset Server
+    Header unset X-Powered-By
+    Header always unset X-Powered-By
+    
+    # Permitir CORS para archivos estáticos
+    <FilesMatch "\.(css|js|woff|woff2|ttf|svg|eot|png|jpg|jpeg|gif|ico)$">
+        Header set Access-Control-Allow-Origin "*"
+        Header set Access-Control-Allow-Methods "GET, OPTIONS"
+        Header set Access-Control-Allow-Headers "Content-Type"
+        Header set Cache-Control "public, max-age=31536000"
+    </FilesMatch>
+    
+    # Tipos MIME correctos
+    AddType text/css .css
+    AddType application/javascript .js
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+</IfModule>
